@@ -1,0 +1,13 @@
+.fff{
+	
+	*width:23px;
+	*height:23px;
+	z-index:1;
+	*background-image: url(/chart_img/calendar_icon2.png);
+	cursor: pointer;
+	
+}
+
+.fff:hover{
+	*background: green;
+}
