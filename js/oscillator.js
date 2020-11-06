@@ -4,7 +4,6 @@ freq.oninput= Test;
 
 oddfreq.onclick=AddOddBtn;                      
 addfreq.onclick=AddOddBtn;
-   
 
 function AddOddBtn(){
     let val = +freq.value + +this.value;
@@ -15,7 +14,6 @@ function AddOddBtn(){
 
     setFreqOscillator(+rangefreq.value + +this.value); 
 }
-
 
 onoffoscill.onclick=function(){
     if (!!!oscill){createOscillator()}
@@ -30,13 +28,11 @@ onoffoscill.onclick=function(){
     }  
 }
 
-
 function setFreqOscillator(Hz){                            // будущий метод
     if (oscill){
         oscill.frequency.value=Hz;  
     }         
 }
- 
 
 function createOscillator(){
     audioctx= new (window.AudioContext || window.webkitAudioContext)();
@@ -46,7 +42,6 @@ function createOscillator(){
     oscill.start();
     oscill.playing=false; 
 }
-
 
 function Test(){
     freq.value=this.value;
