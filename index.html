@@ -12,15 +12,15 @@
 	<body>
 		<button id="SINE">SINE</button>
 
-		<input type="number" id="freq" min="0" max="20000" value="500">
+		<input type="number" id="freq" min="0" max="1000" value="500">
 
-		<input type="range" id="rangefreq" min="0" max="20000" value="500">
+		<input type="range" id="rangefreq" min="0" max="1000" value="500">
 
-		<button id="oddfreq" value="1">-</button><button id="addfreq" value="1">+</button>
+		<button id="oddfreq" value="-1">-</button><button id="addfreq" value="+1">+</button>
 
-		<div id="container" style="height: 100px; min-width: 310px"></div>
+		<div id="container"  class="test" style="height: 100px; min-width: 310px"></div>
 
-		<button id="btnstart">СТАРТ</button><button id="btnstop">СТОП</button>
+		<button id="crt">СОЗДАТЬ</button><button id="onoffoscill">СТАРТ</button>
 
 		<!-- Cкрипт осцилятора -->
 		<script src="js\oscillator.js" ></script>

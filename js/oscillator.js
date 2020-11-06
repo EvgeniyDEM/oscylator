@@ -1,47 +1,59 @@
 var oscill;
+rangefreq.oninput = Test;
+freq.oninput= Test;
 
-rangefreq.oninput =function(){
-   //console.log(this.value);
-   freq.value=this.value;
+oddfreq.onclick=AddOddBtn;                      
+addfreq.onclick=AddOddBtn;
+   
 
-   oscill.frequency.value=+this.value; 
-}
-freq.oninput=function(){
-   console.log(this.value);
-   rangefreq.value=this.value;
-
-   oscill.frequency.value=+this.value; 
-}
-
-oddfreq.onclick=function(){
-   if(freq.min==freq.value){return}                      // заменить на карент велью в объекте
-   freq.value=freq.value-this.value;
-   rangefreq.value=rangefreq.value-this.value;
-
-}
-
-addfreq.onclick=function(){
-    if(freq.max==freq.value){return} 
+function AddOddBtn(){
+    let val = +freq.value + +this.value;
+    if(val>+freq.max||val<+freq.min){return}                    // заменить на карент велью в объекте
+ 
     freq.value=+freq.value + +this.value;
-    rangefreq.value=+rangefreq.value + +this.value; 
+    rangefreq.value=+rangefreq.value + +this.value;
+
+    setFreqOscillator(+rangefreq.value + +this.value); 
 }
 
-btnstart.onclick=function(){
-     createOscillator()  
-}
 
-btnstop.onclick=function(){
-    if (oscill){
-        oscill.stop()
+onoffoscill.onclick=function(){
+    if (!!!oscill){createOscillator()}
+    if (oscill.playing){
+        this.innerHTML='СТАРТ';
+        oscill.disconnect(audioctx.destination); 
+        oscill.playing=false;
+    }else{
+        this.innerHTML='СТОП';
+        oscill.connect(audioctx.destination); 
+        oscill.playing=true;  
     }  
 }
+
+
+function setFreqOscillator(Hz){                            // будущий метод
+    if (oscill){
+        oscill.frequency.value=Hz;  
+    }         
+}
+ 
 
 function createOscillator(){
     audioctx= new (window.AudioContext || window.webkitAudioContext)();
     oscill=audioctx.createOscillator();
-
     //oscill.type='SINE'
-    oscill.frequency.value=440;
-    oscill.connect(audioctx.destination); 
+    oscill.frequency.setValueAtTime(rangefreq.value, audioctx.currentTime);
     oscill.start();
+    oscill.playing=false; 
+}
+
+
+function Test(){
+    freq.value=this.value;
+    rangefreq.value=this.value;
+    setFreqOscillator(this.value); 
+}
+
+crt.onclick=()=>{
+   createOscillator(); 
 }
