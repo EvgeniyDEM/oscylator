@@ -43,7 +43,7 @@ self.addEventListener('push', function(event) {
   // Let's check whether notification permissions have already been granted
   if (Notification.permission === "granted") {
     // If it's okay let's create a notification
-    var notification = new Notification("Hi there!");
+      self.registration.showNotification(event.data.text())
   }
 
   // Otherwise, we need to ask the user for permission
@@ -51,7 +51,7 @@ self.addEventListener('push', function(event) {
     Notification.requestPermission().then(function (permission) {
       // If the user accepts, let's create a notification
       if (permission === "granted") {
-        var notification = new Notification("Hi there!");
+         self.registration.showNotification(event.data.text())
       }
     });
   }
