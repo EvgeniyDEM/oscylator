@@ -7,3 +7,4 @@ if ('serviceWorker' in navigator) {
       }))
       .catch((err) => console.log(err));
 }
+alert('я ещё живой');
