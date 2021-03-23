@@ -38,8 +38,9 @@ self.addEventListener('activate', function (event) {
 
 self.addEventListener('push', function(event) {
   if (event.data) {
-    console.log('This push event has data: ', event.data.text());
-    alert(event.data.text());
+    //console.log('This push event has data: ', event.data.text());
+     //const promiseChain = self.registration.showNotification('Hello, World.');
+     self.registration.showNotification('Hello, World.');
   } else {
     console.log('This push event has no data.');
   }
