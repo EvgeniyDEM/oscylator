@@ -1,7 +1,7 @@
 var CACHE_NAME = 'version_01'
 var URLS = [               // Add URL you want to cache in this list.
                       // If you have separate JS/CSS files,
-  '/index.html'            // add path to those files here
+  '/index.js'            // add path to those files here
 ]
 
 // Respond with cached resources
