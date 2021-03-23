@@ -37,11 +37,19 @@ self.addEventListener('activate', function (event) {
 
 
 self.addEventListener('push', function(event) {
-  if (event.data) {
-    //console.log('This push event has data: ', event.data.text());
-     const promiseChain = self.registration.showNotification('Hello, World.');
-    event.waitUntil(promiseChain);
-  } else {
-    console.log('This push event has no data.');
-  }
+  Notification.requestPermission(function(result) {
+        if (result === 'granted') {
+            navigator.serviceWorker.ready.then(function(registration) {
+                // теперь мы можем показать уведомление
+                return registration.showNotification('event.data.text()');
+            }).catch(function(error) {
+                console.log('ServiceWorker registration failed', error);
+            });
+        }
+    });
+  
+ 
+  
+  
+  
 });
