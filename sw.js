@@ -17,7 +17,7 @@ self.addEventListener('fetch', function (event) {
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
-      return cache.addAll(URLS)
+      //return cache.addAll(URLS)
     })
   )
 })
