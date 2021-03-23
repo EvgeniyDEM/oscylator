@@ -1,54 +1,36 @@
-const CACHE = 'offline-fallback-v1';
+var CACHE_NAME = 'version_01'
+var URLS = [               // Add URL you want to cache in this list.
+  '/',                     // If you have separate JS/CSS files,
+  '/index.html'            // add path to those files here
+]
 
-// При установке воркера мы должны закешировать часть данных (статику).
-self.addEventListener('install', (event) => {
-    event.waitUntil(
-        caches
-            .open(CACHE)
-            .then((cache) => cache.addAll(['/index.html']))
-            // `skipWaiting()` необходим, потому что мы хотим активировать SW
-            // и контролировать его сразу, а не после перезагрузки.
-            .then(() => self.skipWaiting())
-    );
-});
+// Respond with cached resources
+self.addEventListener('fetch', function (event) {
+  event.respondWith(
+    caches.match(event.request).then(function (request) {
+      return request || fetch(event.request)
+    })
+  )
+})
 
-self.addEventListener('activate', (event) => {
-    // `self.clients.claim()` позволяет SW начать перехватывать запросы с самого начала,
-    // это работает вместе с `skipWaiting()`, позволяя использовать `fallback` с самых первых запросов.
-    event.waitUntil(self.clients.claim());
-});
+// Cache resources
+self.addEventListener('install', function (event) {
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(function (cache) {
+      return cache.addAll(URLS)
+    })
+  )
+})
 
-self.addEventListener('fetch', function(event) {
-    // Можете использовать любую стратегию описанную выше.
-    // Если она не отработает корректно, то используейте `Embedded fallback`.
-    event.respondWith(networkOrCache(event.request)
-        .catch(() => useFallback()));
-});
-
-function networkOrCache(request) {
-    return fetch(request)
-        .then((response) => response.ok ? response : fromCache(request))
-        .catch(() => fromCache(request));
-}
-
-// Наш Fallback вместе с нашим собсвенным Динозавриком.
-const FALLBACK =
-    '<div>\n' +
-    '    <div>App Title</div>\n' +
-    '    <div>you are offline</div>\n' +
-    '    <img src="/svg/or/base64/of/your/dinosaur" alt="dinosaur"/>\n' +
-    '</div>';
-
-// Он никогда не упадет, т.к мы всегда отдаем заранее подготовленные данные.
-function useFallback() {
-    return Promise.resolve(new Response(FALLBACK, { headers: {
-        'Content-Type': 'text/html; charset=utf-8'
-    }}));
-}
-
-function fromCache(request) {
-    return caches.open(CACHE).then((cache) =>
-        cache.match(request).then((matching) =>
-            matching || Promise.reject('no-match')
-        ));
-}
+// Delete outdated caches
+self.addEventListener('activate', function (event) {
+  event.waitUntil(
+    caches.keys().then(function (keyList) {
+      return Promise.all(keyList.map(function (key, i) {
+        if (key !== CACHE_NAME) {
+          return caches.delete(keyList[i])
+        }
+      }))
+    })
+  )
+})
