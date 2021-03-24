@@ -4,14 +4,14 @@ if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js')
       .then(() => navigator.serviceWorker.ready.then((worker) => {
         worker.sync.register('syncdata');
-        
+        Notification.requestPermission();
         
       }))
       .catch((err) => console.log(err));
 }
- Notification.requestPermission();
-var btnSubScribePush=document.querySelector('btnSubScribePush');
-btnSubScribePush.click=function(){
+ 
+var btnSubScribePush=document.querySelector('subScribePush');
+//btnSubScribePush.click=function(){
     //if (Notification.permission === "granted"){
-    Notification.requestPermission();
-}
+    //Notification.requestPermission();
+//}
