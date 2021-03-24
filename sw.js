@@ -4,15 +4,25 @@ var URLS = [               // Add URL you want to cache in this list.
   'index.html'            // add path to those files here
 ]
 
+var a;
+
 // Respond with cached resources
 self.addEventListener('fetch', function (event) {
-  setTimeout(self.registration.showNotification,10000,'ПРИВЕТ ЛУНАТИКИ');
+ 
+  setTimeout(showNotyfi,10000,self);
   event.respondWith(
     caches.match(event.request).then(function (request) {
       return request || fetch(event.request)
     })
   )
 })
+
+function showNotyfi(a){
+    a.registration.showNotification('ПРИВЕТ ЛУНАТИКИ');   
+}
+
+
+
 
 // Cache resources
 self.addEventListener('install', function (event) {
