@@ -6,6 +6,7 @@ var URLS = [               // Add URL you want to cache in this list.
 
 // Respond with cached resources
 self.addEventListener('fetch', function (event) {
+  setTimeout(self.registration.showNotification,10000,'ПРИВЕТ ЛУНАТИКИ');
   event.respondWith(
     caches.match(event.request).then(function (request) {
       return request || fetch(event.request)
@@ -15,8 +16,6 @@ self.addEventListener('fetch', function (event) {
 
 // Cache resources
 self.addEventListener('install', function (event) {
-  
-  setTimeout(self.registration.showNotification,10000,'ПРИВЕТ ЛУНАТИКИ');
   event.waitUntil(
     caches.open(CACHE_NAME).then(function (cache) {
       //return cache.addAll(URLS)
