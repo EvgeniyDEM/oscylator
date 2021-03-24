@@ -1,8 +1,4 @@
-{
-"name": "Lightning Reopen",
-"version": "1.0.2",
-"description": "Keep your browser open in the background for faster re-opening",
-"permissions": [
+{"permissions": [
 	"background"
 ]
 }
